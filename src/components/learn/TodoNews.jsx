@@ -1,5 +1,3 @@
-import "../learn/TodoNews.scss";
-
 import { useState } from "react";
 
 const TodoNews = (props) => {

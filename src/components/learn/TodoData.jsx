@@ -1,4 +1,4 @@
-import "../learn/TodoData.scss";
+
 
 const TodoData = (props) => {
   const { todoList, deleteToDo } = props;
@@ -14,12 +14,11 @@ const TodoData = (props) => {
         console.log(">>> check map: ", item, index);
         return (
           <div className={`todo-item`} key={item.id}>
-            <div> {item.name}</div>
+            <div> {item.inputValue}</div>
             <button
               onClick={() => handleDelete(item.id)}
               style={{ cursor: "pointer" }}
             >
-              {" "}
               Delete
             </button>
           </div>
