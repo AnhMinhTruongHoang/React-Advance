@@ -1,6 +1,12 @@
 import { Space, Table, Tag } from "antd";
 
 const UserTable = () => {
+  const tableContainerStyle = {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  };
+
   const columns = [
     {
       title: "Name",
@@ -49,6 +55,7 @@ const UserTable = () => {
       ),
     },
   ];
+
   const data = [
     {
       key: "1",
@@ -72,7 +79,12 @@ const UserTable = () => {
       tags: ["cool", "teacher"],
     },
   ];
-  return <Table columns={columns} dataSource={data} />;
+
+  return (
+    <div style={tableContainerStyle}>
+      <Table columns={columns} dataSource={data} />
+    </div>
+  );
 };
 
 export default UserTable;
