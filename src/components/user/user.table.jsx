@@ -1,88 +1,84 @@
-import { Space, Table, Tag } from "antd";
+import { Table, Button } from "antd";
+import { fetchAllUserApi } from "../../services/api.service";
+import { useEffect, useState } from "react";
 
 const UserTable = () => {
-  const tableContainerStyle = {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    let res = await fetchAllUserApi();
+    setUserList(res.data);
   };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
+      title: "Id",
+      dataIndex: "_id",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "Full Name",
+      dataIndex: "fullName",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
+      title: "Email",
+      dataIndex: "email",
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
+  // Full-screen styles
+  const styles = {
+    container: {
+      width: "100vw", // Full width
+      height: "100vh", // Full height
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#f5f5f5",
+      padding: "20px",
+      boxSizing: "border-box",
     },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
+    tableTitle: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      marginBottom: "15px",
+      color: "#333",
     },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
+    button: {
+      backgroundColor: "#1677ff",
+      color: "#fff",
+      padding: "10px 20px",
+      borderRadius: "6px",
+      border: "none",
+      cursor: "pointer",
+      transition: "0.3s",
+      marginBottom: "15px",
     },
-  ];
+    tableContainer: {
+      width: "100%", // Makes table fit the screen width
+      height: "70vh", // Ensures table takes up most of the screen
+      backgroundColor: "#fff",
+      borderRadius: "8px",
+      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+      overflow: "hidden",
+      padding: "15px",
+    },
+  };
 
   return (
-    <div style={tableContainerStyle}>
-      <Table columns={columns} dataSource={data} />
+    <div style={styles.container}>
+      <div style={styles.tableContainer}>
+        <Table
+          columns={columns}
+          dataSource={userList}
+          rowKey={"_id"}
+          pagination={{ pageSize: 10 }}
+        />
+      </div>
     </div>
   );
 };
