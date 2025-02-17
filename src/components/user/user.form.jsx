@@ -2,41 +2,53 @@ import { Input, Button, notification, Modal } from "antd";
 import { useState } from "react";
 import { createUserApi } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
+  const { loadUsers } = props;
+  //////////////////////
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   ///////////////////// modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // To track loading state
 
   /////////// crud api
   const handleClickBtn = async () => {
-    setIsLoading(true); // Start loading
     const res = await createUserApi(fullName, email, password, phone);
     if (res.data) {
       notification.success({
         message: "Create User",
         description: "Created",
       });
-      setIsModalOpen(false);
+      resetForm();
+      await loadUsers();
     } else {
       notification.error({
         message: "Error Create User",
         description: JSON.stringify(res.message),
       });
     }
-    setIsLoading(false); // End loading
-    setIsModalOpen(false); // Close modal after request
+  };
+
+  const resetForm = () => {
+    setIsModalOpen(false);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
   };
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Table Users</h2>
+      <h2
+        style={{ textAlign: "center", marginTop: "55px", color: "greenyellow" }}
+      >
+        Table Users
+      </h2>
       <div
         style={{
           marginTop: "25px",
+          marginBottom: "25px",
           display: "flex",
           justifyContent: "center", // Centers horizontally
           alignItems: "center", // Centers vertically (if needed)
@@ -51,7 +63,7 @@ const UserForm = () => {
         title="Create User"
         open={isModalOpen}
         onOk={() => setIsModalOpen(false)}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => resetForm()}
         footer={[]}
       >
         <div>
@@ -94,7 +106,6 @@ const UserForm = () => {
             onClick={handleClickBtn}
             type="primary"
             style={{ width: "100%", marginTop: "10px" }}
-            disabled={isLoading} // Disable button while loading
           >
             Submit
           </Button>
