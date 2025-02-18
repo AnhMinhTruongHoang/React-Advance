@@ -1,19 +1,44 @@
 import { Table } from "antd";
+import { DeleteFilled, EditOutlined } from "@ant-design/icons";
+import UserUpdateModal from "./user.UpdateModal";
+import { useState } from "react";
 
 const UserTable = (props) => {
   const { userList } = props;
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState(null);
+
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
+      render: (_, record) => {
+        return <a href="#">{record._id}</a>;
+      },
     },
     {
-      title: "Full Name",
+      title: "Full name",
       dataIndex: "fullName",
     },
     {
       title: "Email",
       dataIndex: "email",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "20px" }}>
+          <EditOutlined
+            onClick={() => {
+              setDataUpdate(record);
+              setIsModalUpdateOpen(true);
+            }}
+            style={{ cursor: "pointer", color: "yellow" }}
+          />
+          <DeleteFilled style={{ cursor: "pointer", color: "red" }} />
+        </div>
+      ),
     },
   ];
 
@@ -67,6 +92,12 @@ const UserTable = (props) => {
           pagination={{ pageSize: 10 }}
         />
       </div>
+      <UserUpdateModal
+        isModalUpdateOpen={isModalUpdateOpen}
+        setIsModalUpdateOpen={setIsModalUpdateOpen}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
+      />
     </div>
   );
 };

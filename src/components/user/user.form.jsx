@@ -55,7 +55,7 @@ const UserForm = (props) => {
           gap: "5px",
         }}
       >
-        <Button onClick={() => setIsModalOpen(true)}>Create User</Button>
+        <Button onClick={() => setIsModalOpen(true)}>Create</Button>
         <Button>Update</Button>
         <Button>Delete</Button>
       </div>
