@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { Input, Button, notification, Modal } from "antd";
-import { createUserApi } from "../../services/api.service.js";
+import { updateUserApi } from "../../services/api.service.js";
 
 const UserUpdateModal = (props) => {
   //////////////////////////// props
-  const { isModalUpdateOpen, setIsModalUpdateOpen, setDataUpdate, dataUpdate } =
-    props;
+  const {
+    isModalUpdateOpen,
+    setIsModalUpdateOpen,
+    setDataUpdate,
+    dataUpdate,
+    loadUsers,
+  } = props;
   ////////////////////////////
   const [id, setId] = useState("");
   const [fullName, setFullName] = useState("");
@@ -21,17 +26,18 @@ const UserUpdateModal = (props) => {
 
   /////////// crud api
   const handleClickBtn = async () => {
-    const res = await createUserApi(fullName, email, password, phone);
+    const res = await updateUserApi(id, fullName, phone);
+
     if (res.data) {
       notification.success({
-        message: "Create User",
-        description: "Created",
+        message: "Update User",
+        description: "Updated",
       });
       resetForm();
       await loadUsers();
     } else {
       notification.error({
-        message: "Error Create User",
+        message: "Error update User",
         description: JSON.stringify(res.message),
       });
     }
@@ -64,9 +70,8 @@ const UserUpdateModal = (props) => {
             Full Name
           </span>
           <Input
-            required
             value={fullName}
-            onChange={(event) => setfullName(event.target.value)}
+            onChange={(event) => setFullName(event.target.value)}
           />
         </div>
       </div>
