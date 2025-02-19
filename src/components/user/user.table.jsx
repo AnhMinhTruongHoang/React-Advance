@@ -1,19 +1,51 @@
-import { Table } from "antd";
+import { notification, Popconfirm, Table } from "antd";
 import { DeleteFilled, EditOutlined } from "@ant-design/icons";
 import UserUpdateModal from "./user.UpdateModal";
 import { useState } from "react";
-
+import UserViewDetail from "./user.viewDetail";
+import { deleteUserApi } from "../../services/api.service";
+///////////////
 const UserTable = (props) => {
   const { userList, loadUsers } = props;
+
+  const [openViewDetail, setOpenViewDetail] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
+  const [dataUser, setDataUser] = useState(null);
+
+  const handleDeleteUser = async (id) => {
+    const res = await deleteUserApi(id);
+
+    if (res.data) {
+      notification.success({
+        message: "Deleted",
+        description: "deleted",
+      });
+      await loadUsers();
+    } else {
+      notification.error({
+        message: "Error delete User",
+        description: JSON.stringify(res.message),
+      });
+    }
+  };
 
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
       render: (_, record) => {
-        return <a href="#">{record._id}</a>;
+        return (
+          <a
+            href="#"
+            onClick={(e) => {
+              setDataUser(record);
+              setOpenViewDetail(true);
+            }}
+          >
+            {record._id}
+          </a>
+        );
       },
     },
     {
@@ -30,13 +62,22 @@ const UserTable = (props) => {
       render: (_, record) => (
         <div style={{ display: "flex", gap: "20px" }}>
           <EditOutlined
-            onClick={() => {
+            onClick={(e) => {
               setDataUpdate(record);
               setIsModalUpdateOpen(true);
             }}
             style={{ cursor: "pointer", color: "yellow" }}
           />
-          <DeleteFilled style={{ cursor: "pointer", color: "red" }} />
+          <Popconfirm
+            title="Xóa người dùng"
+            description="Bạn chắc chắn xóa user này ?"
+            onConfirm={() => handleDeleteUser(record._id)}
+            okText="Yes"
+            cancelText="No"
+            placement="left"
+          >
+            <DeleteFilled style={{ cursor: "pointer", color: "red" }} />
+          </Popconfirm>
         </div>
       ),
     },
@@ -72,8 +113,8 @@ const UserTable = (props) => {
       marginBottom: "15px",
     },
     tableContainer: {
-      width: "100%", // Makes table fit the screen width
-      height: "70vh", // Ensures table takes up most of the screen
+      width: "100%",
+      height: "70vh",
       backgroundColor: "#fff",
       borderRadius: "8px",
       boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
@@ -98,6 +139,13 @@ const UserTable = (props) => {
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
         loadUsers={loadUsers}
+      />
+      <UserViewDetail
+        openViewDetail={openViewDetail}
+        setOpenViewDetail={setOpenViewDetail}
+        loadUsers={loadUsers}
+        dataUser={dataUser}
+        setDataUser={setDataUser}
       />
     </div>
   );

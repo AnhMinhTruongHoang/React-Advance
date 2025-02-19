@@ -7,7 +7,7 @@ import { fetchAllUserApi } from "../services/api.service";
 const UserPage = () => {
   const [userList, setUserList] = useState([]);
 
-  /////////////////////// user list
+  /////////////////////// user list and reload user
   useEffect(() => {
     loadUsers();
   }, []);

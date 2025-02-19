@@ -1,6 +1,7 @@
 import { Input, Button, notification, Modal } from "antd";
 import { useState } from "react";
 import { createUserApi } from "../../services/api.service";
+import { DeleteFilled, EditOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const UserForm = (props) => {
   const { loadUsers } = props;
@@ -55,9 +56,12 @@ const UserForm = (props) => {
           gap: "5px",
         }}
       >
-        <Button onClick={() => setIsModalOpen(true)}>Create</Button>
-        <Button>Update</Button>
-        <Button>Delete</Button>
+        <UserAddOutlined
+          style={{ fontSize: "30px",  cursor:"pointer", color:"blue"}}
+          onClick={() => setIsModalOpen(true)}
+        >
+          Create
+        </UserAddOutlined>
       </div>
       <Modal
         title="Create User"
