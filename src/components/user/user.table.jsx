@@ -6,7 +6,7 @@ import UserViewDetail from "./user.viewDetail";
 import { deleteUserApi } from "../../services/api.service";
 ///////////////
 const UserTable = (props) => {
-  const { userList, loadUsers } = props;
+  const { userList, loadUsers, current, pageSize, total } = props;
 
   const [openViewDetail, setOpenViewDetail] = useState(false);
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
@@ -31,6 +31,12 @@ const UserTable = (props) => {
   };
 
   const columns = [
+    {
+      title: "Order ",
+      render: (_, record, index) => {
+        return <>{index + 1}</>;
+      },
+    },
     {
       title: "Id",
       dataIndex: "_id",
@@ -130,7 +136,19 @@ const UserTable = (props) => {
           columns={columns}
           dataSource={userList}
           rowKey={"_id"}
-          pagination={{ pageSize: 10 }}
+          // pagination={{
+          //   current: current,
+          //   pageSize: pageSize,
+          //   showSizeChanger: true,
+          //   total: total,
+          //   showTotal: (total, range) => {
+          //     return (
+          //       <div>
+          //         {range[0]}-{range[1]} trên {total} rows
+          //       </div>
+          //     );
+          //   },
+          // }}
         />
       </div>
       <UserUpdateModal
