@@ -9,7 +9,7 @@ const LoginPage = () => {
   ///////////////////
 
   const onFinish = async (values) => {
-    const res = await loginApi(values.username, values.password);
+    const res = await loginApi(values.email, values.password);
     if (res.data) {
       notification.success({
         message: "Login success !",
@@ -48,7 +48,7 @@ const LoginPage = () => {
         >
           <Form.Item
             label="Email"
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,

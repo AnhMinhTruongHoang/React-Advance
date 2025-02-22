@@ -1,18 +1,10 @@
-import {
-  BookOutlined,
-  HomeOutlined,
-  UserAddOutlined,
-  UserOutlined,
-  LoginOutlined,
-  UsergroupAddOutlined,
-} from "@ant-design/icons";
-import { Menu, Dropdown, Space } from "antd";
+import { BookOutlined, HomeOutlined, UserAddOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [current, setCurrent] = useState("");
-
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -66,45 +58,13 @@ const Header = () => {
     },
   ];
 
-  // Dropdown menu items
-  const dropdownMenu = (
-    <Menu>
-      <Menu.Item key="register" icon={<UsergroupAddOutlined />}>
-        <Link to="/register">Register</Link>
-      </Menu.Item>
-      <Menu.Item key="profile" icon={<UserOutlined />}>
-        <Link to="/profile">User</Link>
-      </Menu.Item>
-      <Menu.Item key="login" icon={<LoginOutlined />}>
-        <Link to="/login">Login</Link>
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
     <Menu
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
-      style={{ display: "flex", justifyContent: "space-between" }}
-    >
-      {/* Left Side Navigation Items */}
-      {items.map((item) => (
-        <Menu.Item key={item.key} icon={item.icon}>
-          {item.label}
-        </Menu.Item>
-      ))}
-
-      {/* Right Side Dropdown */}
-      <Menu.Item key="dropdown" style={{ marginLeft: "auto" }}>
-        <Dropdown overlay={dropdownMenu} trigger={["click"]}>
-          <Space>
-            <UserOutlined />
-            Account
-          </Space>
-        </Dropdown>
-      </Menu.Item>
-    </Menu>
+      items={items}
+    />
   );
 };
 
