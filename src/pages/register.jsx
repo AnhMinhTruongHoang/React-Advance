@@ -1,34 +1,29 @@
-import { useState } from "react";
 import { Button, Col, Form, Input, notification, Row } from "antd";
 import { registerApi } from "../services/api.service";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    try {
-      const res = await registerApi(
-        values.fullName,
-        values.email,
-        values.password,
-        values.phone
-      );
+    const res = await registerApi(
+      values.fullName,
+      values.email,
+      values.password,
+      values.phone
+    );
 
-      if (res.data) {
-        notification.success({
-          message: "Success!",
-          description: "Registration successful.",
-        });
-        navigate("/");
-      } else {
-        throw new Error("Registration failed.");
-      }
-    } catch (error) {
+    if (res.data) {
+      notification.success({
+        message: "Success!",
+        description: "Registration successful.",
+      });
+      navigate("/");
+    } else {
       notification.error({
         message: "Failure!",
-        description: error.message || "Registration failed.",
+        description: "Registration failed.",
       });
     }
 
@@ -127,6 +122,16 @@ const RegisterPage = () => {
                 Register
               </Button>
             </Form.Item>
+            <Link
+              to={"/login"}
+              style={{
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <i>Login</i>
+            </Link>
           </Form>
         </div>
       </Col>
