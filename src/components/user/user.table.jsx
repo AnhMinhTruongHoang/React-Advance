@@ -130,7 +130,7 @@ const UserTable = (props) => {
           columns={columns}
           dataSource={userList}
           rowKey={"_id"}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 10, position: ["bottomCenter"] }}
         />
       </div>
       <UserUpdateModal

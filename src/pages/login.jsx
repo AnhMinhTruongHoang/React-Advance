@@ -2,20 +2,29 @@ import { Button, Checkbox, Col, Form, Input, notification, Row } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { loginApi } from "../services/api.service";
+import { useContext, useState } from "react";
+import { AuthContext } from "../components/context/auth.context";
 
 const LoginPage = () => {
   const [form] = useForm();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  ///////////////////
+  /////////////////// context
+  const { setUser } = useContext(AuthContext);
+
+  ////////////////////
 
   const onFinish = async (values) => {
+    setLoading(true);
     const res = await loginApi(values.email, values.password);
     if (res.data) {
       notification.success({
         message: "Login success !",
-        description: "Login success",
+        description: "login success ",
       });
-      navigate("/");
+      localStorage.setItem("access_token", res.data.access_token);
+      setUser(res.data.user);
+      navigate("/");a
       console.log("Success:", values);
     } else {
       notification.error({
@@ -23,6 +32,7 @@ const LoginPage = () => {
         description: "Login failed",
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -69,7 +79,13 @@ const LoginPage = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  form.submit();
+                }
+              }}
+            />
           </Form.Item>
 
           <Form.Item name="remember" valuePropName="checked" label={null}>
@@ -79,6 +95,7 @@ const LoginPage = () => {
           <Form.Item label={null}>
             <Button
               type="primary"
+              loading={loading}
               onClick={() => form.submit()}
               style={{
                 width: "100%",
@@ -87,7 +104,7 @@ const LoginPage = () => {
                 backgroundColor: "lightblue",
               }}
             >
-              Submit
+              Login
             </Button>
             <Link
               to={"/register"}
@@ -97,7 +114,7 @@ const LoginPage = () => {
                 marginTop: "20px",
               }}
             >
-              Register
+              <i> Register</i>
             </Link>
           </Form.Item>
         </Form>

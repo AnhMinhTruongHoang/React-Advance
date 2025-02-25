@@ -1,10 +1,20 @@
-import { BookOutlined, HomeOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  BookOutlined,
+  HomeOutlined,
+  UserAddOutlined,
+  LoginOutlined,
+  AliwangwangFilled,
+} from "@ant-design/icons";
 import { Menu } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 const Header = () => {
   const [current, setCurrent] = useState("");
+
+  const { user } = useContext(AuthContext);
+
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -25,37 +35,27 @@ const Header = () => {
       label: <Link to={"/books"}>Book</Link>,
       key: "book",
       icon: <BookOutlined />,
-      children: [
-        {
-          type: "group",
-          label: "Item 1",
-          children: [
-            {
-              label: "Option 1",
-              key: "setting:1",
-            },
-            {
-              label: "Option 2",
-              key: "setting:2",
-            },
-          ],
-        },
-        {
-          type: "group",
-          label: "Item 2",
-          children: [
-            {
-              label: "Option 3",
-              key: "setting:3",
-            },
-            {
-              label: "Option 4",
-              key: "setting:4",
-            },
-          ],
-        },
-      ],
     },
+    ...(!user.id
+      ? [
+          {
+            label: <Link to={"/login"}>Login</Link>,
+            key: "login",
+            icon: <LoginOutlined />,
+          },
+        ]
+      : []),
+    ///////////////// show user after login
+    ...(user.id
+      ? [
+          {
+            label: `welcome - ${user.fullName}`,
+            key: "setting",
+            icon: <AliwangwangFilled />,
+            children: [{ label: "Logout", key: "logut" }],
+          },
+        ]
+      : []),
   ];
 
   return (
