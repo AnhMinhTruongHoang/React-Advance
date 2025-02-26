@@ -2,12 +2,15 @@ import { Col, Popconfirm, Row, Table } from "antd";
 import { BookOutlined, DeleteFilled, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import ViewBookDetail from "./book.viewDetail";
+import BookCreator from "./book.create";
 
 const BookTable = (props) => {
   const { bookList, loadBooks } = props;
   ///////////////////////
-  const [openViewBookDetail, setOpenViewBookDetail] = useState(false);
   const [dataBook, setDataBook] = useState(null);
+  const [openViewBookDetail, setOpenViewBookDetail] = useState(false);
+  const [openBookCreator, setOpenBookCreator] = useState(false);
+  const [openUpdateBook, setOpenUpdateBook] = useState(false);
   const [dataUpdateBook, setDataUpdateBook] = useState(null);
 
   const columns = [
@@ -113,6 +116,7 @@ const BookTable = (props) => {
         </h1>
         <BookOutlined
           type="submit"
+          onClick={() => setOpenBookCreator(true)}
           style={{ fontSize: "30px", color: "#1677ff", cursor: "pointer" }}
         />
       </div>
@@ -139,6 +143,13 @@ const BookTable = (props) => {
         setOpenViewBookDetail={setOpenViewBookDetail}
         dataBook={dataBook}
         setDataBook={setDataBook}
+      />
+      <BookCreator
+        dataBook={dataBook}
+        setDataBook={setDataBook}
+        openBookCreator={openBookCreator}
+        setOpenBookCreator={setOpenBookCreator}
+        loadBooks={loadBooks}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import { Input, Button, notification, Modal } from "antd";
 import { useState } from "react";
 import { createUserApi } from "../../services/api.service";
-import { DeleteFilled, EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import { UserAddOutlined } from "@ant-design/icons";
 
 const UserForm = (props) => {
   const { loadUsers } = props;
@@ -57,7 +57,7 @@ const UserForm = (props) => {
         }}
       >
         <UserAddOutlined
-          style={{ fontSize: "30px",  cursor:"pointer", color:"blue"}}
+          style={{ fontSize: "30px", cursor: "pointer", color: "blue" }}
           onClick={() => setIsModalOpen(true)}
         >
           Create

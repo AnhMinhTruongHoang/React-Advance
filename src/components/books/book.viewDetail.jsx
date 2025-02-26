@@ -1,9 +1,4 @@
-import { Button, Drawer, notification } from "antd";
-import { useState } from "react";
-import {
-  handleUpdateFileApi,
-  updateBookImageApi,
-} from "../../services/api.service";
+import { Drawer } from "antd";
 
 const ViewBookDetail = (props) => {
   const { openViewBookDetail, setOpenViewBookDetail, dataBook, setDataBook } =
