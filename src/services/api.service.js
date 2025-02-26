@@ -55,6 +55,7 @@ const updateUserAvatarApi = (avatar, _id, fullName, phone) => {
   };
   return axios.put(URL_BACKEND, data);
 };
+
 const registerApi = (fullName, email, password, phone) => {
   const URL_BACKEND = "/api/v1/user/register";
   const data = {
@@ -85,6 +86,21 @@ const getAccountApi = () => {
 
   return axios.get(URL_BACKEND);
 };
+//////////////// book
+const fetchAllBookApi = () => {
+  const URL_BACKEND = "/api/v1/book";
+
+  return axios.get(URL_BACKEND);
+};
+
+const updateBookImageApi = (_id, thumbnail) => {
+  const URL_BACKEND = "/api/v1/book";
+  const data = {
+    _id: _id,
+    thumbnail: thumbnail,
+  };
+  return axios.put(URL_BACKEND, data);
+};
 
 export {
   fetchAllUserApi,
@@ -97,4 +113,6 @@ export {
   loginApi,
   logoutApi,
   getAccountApi,
+  fetchAllBookApi,
+  updateBookImageApi,
 };

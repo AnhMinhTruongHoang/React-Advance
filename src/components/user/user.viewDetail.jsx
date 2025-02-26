@@ -1,4 +1,4 @@
-import { Button, Drawer, message, notification } from "antd";
+import { Button, Drawer, notification } from "antd";
 import { useState } from "react";
 import {
   handleUpdateFileApi,
@@ -13,6 +13,7 @@ const UserViewDetail = (props) => {
     setDataUser,
     loadUsers,
   } = props;
+  //////////////////
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
 

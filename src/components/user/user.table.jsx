@@ -68,7 +68,8 @@ const UserTable = (props) => {
             }}
             style={{ cursor: "pointer", color: "yellow" }}
           />
-          <Popconfirm
+
+          <Popconfirm ///////////// pop up
             title="Xóa người dùng"
             description="Bạn chắc chắn xóa user này ?"
             onConfirm={() => handleDeleteUser(record._id)}
@@ -86,8 +87,8 @@ const UserTable = (props) => {
   // Full-screen styles
   const styles = {
     container: {
-      width: "100vw", // Full width
-      height: "100vh", // Full height
+      width: "100vw",
+      height: "100vh",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",

@@ -24,7 +24,8 @@ const LoginPage = () => {
       });
       localStorage.setItem("access_token", res.data.access_token);
       setUser(res.data.user);
-      navigate("/");a
+      navigate("/");
+      a;
       console.log("Success:", values);
     } else {
       notification.error({
