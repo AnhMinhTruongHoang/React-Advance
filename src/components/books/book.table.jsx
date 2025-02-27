@@ -4,6 +4,7 @@ import { useState } from "react";
 import ViewBookDetail from "./book.viewDetail";
 import BookCreator from "./book.create";
 import BookCreatorUncontrolled from "./book.create.uncontroller";
+import BookUpdateModal from "./book.UpdateModalUncontrolled";
 
 const BookTable = (props) => {
   const { bookList, loadBooks } = props;
@@ -68,7 +69,7 @@ const BookTable = (props) => {
           <EditOutlined
             onClick={(e) => {
               setDataUpdateBook(record);
-              setIsModalUpdateOpen(true);
+              setOpenUpdateBook(true);
             }}
             style={{ cursor: "pointer", color: "orange", fontSize: "18px" }}
           />
@@ -159,6 +160,13 @@ const BookTable = (props) => {
         loadBooks={loadBooks}
         dataBook={dataBook}
         setDataBook={setDataBook}
+      />
+      <BookUpdateModal
+        openUpdateBook={dataUpdateBook}
+        setOpenUpdateBook={setOpenUpdateBook}
+        dataUpdateBook={dataUpdateBook}
+        setDataUpdateBook={setDataUpdateBook}
+        loadBooks={loadBooks}
       />
     </div>
   );

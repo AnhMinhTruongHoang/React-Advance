@@ -58,42 +58,35 @@ const BookCreator = (props) => {
       return;
     }
 
-    try {
-      // Upload the file
-      const resUpload = await handleUpdateFileApi(selectedFile, "book");
+    // Upload the file
+    const resUpload = await handleUpdateFileApi(selectedFile, "book");
 
-      if (resUpload.data) {
-        const newThumbnail = resUpload.data.fileUploaded;
+    if (resUpload.data) {
+      const newThumbnail = resUpload.data.fileUploaded;
 
-        // Create the book
-        const resBook = await BookCreatorApi(
-          newThumbnail,
-          mainText,
-          author,
-          price,
-          quantity,
-          category
-        );
+      // Create the book
+      const resBook = await BookCreatorApi(
+        newThumbnail,
+        mainText,
+        author,
+        price,
+        quantity,
+        category
+      );
 
-        if (resBook.data) {
-          resetForm();
-          await loadBooks();
-          notification.success({
-            message: "Created",
-            description: "Successfully created a new book",
-          });
-        } else {
-          notification.error({
-            message: "Failed",
-            description: "Failed to create a new book",
-          });
-        }
+      if (resBook.data) {
+        resetForm();
+        await loadBooks();
+        notification.success({
+          message: "Created",
+          description: "Successfully created a new book",
+        });
+      } else {
+        notification.error({
+          message: "Failed",
+          description: "Failed to create a new book",
+        });
       }
-    } catch (error) {
-      notification.error({
-        message: "Error",
-        description: "Something went wrong. Please try again.",
-      });
     }
   };
 
