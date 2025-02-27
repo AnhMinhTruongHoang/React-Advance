@@ -3,6 +3,7 @@ import { BookOutlined, DeleteFilled, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import ViewBookDetail from "./book.viewDetail";
 import BookCreator from "./book.create";
+import BookCreatorUncontrolled from "./book.create.uncontroller";
 
 const BookTable = (props) => {
   const { bookList, loadBooks } = props;
@@ -144,12 +145,20 @@ const BookTable = (props) => {
         dataBook={dataBook}
         setDataBook={setDataBook}
       />
-      <BookCreator
+      {/* <BookCreator
         dataBook={dataBook}
         setDataBook={setDataBook}
         openBookCreator={openBookCreator}
         setOpenBookCreator={setOpenBookCreator}
         loadBooks={loadBooks}
+      /> */}
+
+      <BookCreatorUncontrolled
+        openBookCreator={openBookCreator}
+        setOpenBookCreator={setOpenBookCreator}
+        loadBooks={loadBooks}
+        dataBook={dataBook}
+        setDataBook={setDataBook}
       />
     </div>
   );

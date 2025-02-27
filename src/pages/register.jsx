@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, notification, Row } from "antd";
+import { Button, Col, Input, notification, Row, Form } from "antd";
 import { registerApi } from "../services/api.service";
 import { Link, useNavigate } from "react-router-dom";
 
