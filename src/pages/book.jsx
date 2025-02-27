@@ -7,7 +7,7 @@ const BookPage = () => {
 
   useEffect(() => {
     loadBooks();
-  }, []);
+  }, [bookList]);
 
   const loadBooks = async () => {
     const res = await fetchAllBookApi();

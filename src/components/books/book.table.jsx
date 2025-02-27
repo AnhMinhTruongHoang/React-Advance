@@ -1,10 +1,10 @@
-import { Col, Popconfirm, Row, Table } from "antd";
+import { notification, Popconfirm, Table } from "antd";
 import { BookOutlined, DeleteFilled, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import ViewBookDetail from "./book.viewDetail";
-import BookCreator from "./book.create";
 import BookCreatorUncontrolled from "./book.create.uncontroller";
-import BookUpdateModal from "./book.UpdateModalUncontrolled";
+import BookUpdateModal from "./book.UpdateModalControlled";
+import { deleteBookApi } from "../../services/api.service";
 
 const BookTable = (props) => {
   const { bookList, loadBooks } = props;
@@ -14,6 +14,25 @@ const BookTable = (props) => {
   const [openBookCreator, setOpenBookCreator] = useState(false);
   const [openUpdateBook, setOpenUpdateBook] = useState(false);
   const [dataUpdateBook, setDataUpdateBook] = useState(null);
+
+  ///////////////delete
+  const handleDeleteBook = async (id) => {
+    const res = await deleteBookApi(id);
+    if (res.data) {
+      notification.success({
+        message: "Deleted",
+        description: "deleted",
+      });
+      await loadBooks();
+    } else {
+      notification.error({
+        message: "Error delete User",
+        description: JSON.stringify(res.message),
+      });
+    }
+  };
+
+  /////////////
 
   const columns = [
     {
@@ -75,9 +94,9 @@ const BookTable = (props) => {
           />
 
           <Popconfirm
-            title="Xóa người dùng"
-            description="Bạn chắc chắn xóa user này?"
-            // onConfirm={() => handleDeleteBook(record._id)}
+            title="Delete Book"
+            description=" Delete this book?"
+            onConfirm={() => handleDeleteBook(record._id)}
             okText="Yes"
             cancelText="No"
             placement="left"
@@ -162,12 +181,19 @@ const BookTable = (props) => {
         setDataBook={setDataBook}
       />
       <BookUpdateModal
-        openUpdateBook={dataUpdateBook}
+        openUpdateBook={openUpdateBook}
         setOpenUpdateBook={setOpenUpdateBook}
         dataUpdateBook={dataUpdateBook}
         setDataUpdateBook={setDataUpdateBook}
         loadBooks={loadBooks}
       />
+      {/* <BookUpdateFormModal
+        openUpdateBook={openUpdateBook}
+        setOpenUpdateBook={setOpenUpdateBook}
+        dataUpdateBook={dataUpdateBook}
+        setDataUpdateBook={setDataUpdateBook}
+        loadBooks={loadBooks}
+      /> */}
     </div>
   );
 };

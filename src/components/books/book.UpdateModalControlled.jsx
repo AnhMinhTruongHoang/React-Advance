@@ -132,7 +132,7 @@ const BookUpdateModal = (props) => {
             textAlign: "center",
             display: "flex",
             justifyContent: "center",
-            color:"greenyellow"
+            color: "greenyellow",
           }}
         >
           Update book
