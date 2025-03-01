@@ -10,7 +10,7 @@ const UserPage = () => {
   /////////////////////// user list and reload user
   useEffect(() => {
     loadUsers();
-  }, [userList]);
+  }, []);
 
   const loadUsers = async () => {
     let res = await fetchAllUserApi();
