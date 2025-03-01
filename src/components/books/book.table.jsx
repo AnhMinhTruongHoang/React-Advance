@@ -1,19 +1,37 @@
 import { notification, Popconfirm, Table } from "antd";
 import { BookOutlined, DeleteFilled, EditOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ViewBookDetail from "./book.viewDetail";
 import BookCreatorUncontrolled from "./book.create.uncontroller";
 import BookUpdateModal from "./book.UpdateModalControlled";
-import { deleteBookApi } from "../../services/api.service";
+import { deleteBookApi, fetchAllBookApi } from "../../services/api.service";
 
 const BookTable = (props) => {
   const { bookList, loadBooks } = props;
   ///////////////////////
+  const [loadingTable, SetLoadingTable] = useState(false);
   const [dataBook, setDataBook] = useState(null);
   const [openViewBookDetail, setOpenViewBookDetail] = useState(false);
   const [openBookCreator, setOpenBookCreator] = useState(false);
   const [openUpdateBook, setOpenUpdateBook] = useState(false);
   const [dataUpdateBook, setDataUpdateBook] = useState(null);
+
+  // const loadBook = useCallback(async () => {
+  //   ////////// loading table
+  //   setLoadingTable(true);
+  //   const res = await fetchAllBookApi(current, pageSize);
+  //   if (res.data) {
+  //     setDataBook(res.data.result);
+  //     setCurrent(res.data.meta.current);
+  //     setPageSize(res.data.meta.pageSize);
+  //     setTotal(res.data.meta.total);
+  //   }
+  //   setLoadingTable(false);
+  // }, [current, pageSize]);
+
+  // useEffect(() => {
+  //   loadBook();
+  // }, []);
 
   ///////////////delete
   const handleDeleteBook = async (id) => {
@@ -156,6 +174,7 @@ const BookTable = (props) => {
           dataSource={bookList}
           columns={columns}
           rowKey={"_id"}
+          loading={loadingTable}
           pagination={{ pageSize: 10, position: ["bottomCenter"] }}
         />
       </div>

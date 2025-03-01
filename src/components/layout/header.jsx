@@ -6,8 +6,8 @@ import {
   AliwangwangFilled,
 } from "@ant-design/icons";
 import { Menu, message } from "antd";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { logoutApi } from "../../services/api.service";
 
@@ -15,6 +15,22 @@ const Header = () => {
   const [current, setCurrent] = useState("");
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
+  const location = useLocation(AuthContext);
+
+  useEffect(() => {
+    if (location && location.pathname) {
+      ///////////// highlight NAV
+      const allRoute = ["user", "books"];
+      const currentRoute = allRoute.find(
+        (item) => `/${item}` === location.pathname
+      );
+      if (currentRoute) {
+        setCurrent(currentRoute);
+      } else {
+        setCurrent("home");
+      }
+    }
+  }, [location]);
 
   const onClick = (e) => {
     console.log("click ", e);
